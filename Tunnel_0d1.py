@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 pd.options.display.max_rows = 1000
 
 #change this values for the wind tunnel alpha, min and max values
-min = 14
+min = 14                            #minus value
 max = 16
 alphaStep = 2
 
