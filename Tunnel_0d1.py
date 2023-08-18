@@ -11,8 +11,8 @@ max = 16
 alphaStep = 2
 
 # Environment Conditions
-Temp = 26                 #C
-Pressure = 85             #kPa
+Temp = 26               #C
+Pressure = 85           #kPa
 Va = 10.0                 #m/s
 rho = 0.98985
 q = 0.5*rho*(Va**2)
@@ -84,7 +84,12 @@ xAxis = range(minAxis,max+alphaStep,alphaStep)
 print(type(xAxis))
 print(xAxis)
 print(np.array(CL))
-yAxis = np.array(CL)
+yAxis = CL
 
-plt.plot(xAxis,yAxis)
+plt.plot(xAxis,yAxis, marker="*")
+plt.grid()
+plt.title("Full Plane CL-alpha Graph at 10m/s")
+plt.xlabel("alpha")
+plt.ylabel("CL")
+plt.legend()
 plt.show()
