@@ -98,11 +98,22 @@ print(type(xAxis))
 print(xAxis)
 print(np.array(CL))
 yAxis = CL
+yAxis2 = CD
 
+plt.subplot(1, 2, 1)
 plt.plot(xAxis,yAxis, marker="*")
 plt.grid()
 plt.title("CL-alpha Graph of Full Plane at 10m/s")
 plt.xlabel("alpha")
 plt.ylabel("CL")
-plt.legend()
+plt.legend(["CL Value "])
+#plt.show()
+
+plt.subplot(1, 2, 2)
+plt.plot(xAxis,yAxis2, marker="*")
+plt.grid()
+plt.title("CD-alpha Graph of Full Plane at 10m/s")
+plt.xlabel("alpha")
+plt.ylabel("CD")
+plt.legend(["CD Value "])
 plt.show()
