@@ -39,37 +39,50 @@ CD = []
 fileiter = range(0,max+alphaStep,alphaStep)
 fileiterminus = range(min,0,(-1*alphaStep))
 
+"""
+Note: Why 2 for loops ? Tradition in laboratory is 
+saving minus alphas as Ae{val}. Not A-{val}. 
+"""
+foldername = "10m_s"
+staticVal = "10"
+
 for x in fileiterminus:
-    data_10ms_alpha0 = pd.read_csv(f'./10m_s/Ae{x}-NACA6412NACA0012ER-static10-1.csv')
+    df = pd.read_csv(f'./{foldername}/Ae{x}-NACA6412NACA0012ER-static{staticVal}-1.csv')
     #data_10ms_alpha0.info() #info about columns. 
 
-    a0_FP = data_10ms_alpha0.iloc[: , [0, 1]].copy()
-    a0_FP.abs
-    a0_10ms_mean_LiftDrag = a0_FP.mean(axis=0)
+    dataframe = df.iloc[: , [0, 1]].copy()
+    dataframe.abs
+    newDataframe = dataframe.mean(axis=0)
     #print(a0_10ms_mean_LiftDrag[0])
     #print(a0_10ms_mean_LiftDrag[1])
-    Lift.append(a0_10ms_mean_LiftDrag[0])
-    Drag.append(a0_10ms_mean_LiftDrag[1])
-    CLval = a0_10ms_mean_LiftDrag[0]/(q*S)
-    CDval = a0_10ms_mean_LiftDrag[1]/(q*DS)
+    Lift.append(newDataframe[0])
+    Drag.append(newDataframe[1])
+    CLval = newDataframe[0]/(q*S)
+    CDval = newDataframe[1]/(q*DS)
     CL.append(CLval)
     CD.append(CDval)
 
 for x in fileiter:
-    data_10ms_alpha0 = pd.read_csv(f'./10m_s/A{x}-NACA6412NACA0012ER-static10-1.csv')
+    df = pd.read_csv(f'./10m_s/A{x}-NACA6412NACA0012ER-static10-1.csv')
     #data_10ms_alpha0.info() #info about columns. 
 
-    a0_FP = data_10ms_alpha0.iloc[: , [0, 1]].copy()
-    a0_FP.abs
-    a0_10ms_mean_LiftDrag = a0_FP.mean(axis=0)
+    dataframe = df.iloc[: , [0, 1]].copy()
+    dataframe.abs
+    newDataframe = dataframe.mean(axis=0)
     #print(a0_10ms_mean_LiftDrag[0])
     #print(a0_10ms_mean_LiftDrag[1])
-    Lift.append(a0_10ms_mean_LiftDrag[0])
-    Drag.append(a0_10ms_mean_LiftDrag[1])
-    CLval = a0_10ms_mean_LiftDrag[0]/(q*S)
-    CDval = a0_10ms_mean_LiftDrag[1]/(q*DS)
+    Lift.append(newDataframe[0])
+    Drag.append(newDataframe[1])
+    CLval = newDataframe[0]/(q*S)
+    CDval = newDataframe[1]/(q*DS)
     CL.append(CLval)
     CD.append(CDval)
+
+
+#save to CSV File. 
+
+#end of Saving into CSV.
+
 
 print(f'Lift : {Lift}')
 print(f'CL : {CL}')
@@ -88,7 +101,7 @@ yAxis = CL
 
 plt.plot(xAxis,yAxis, marker="*")
 plt.grid()
-plt.title("Full Plane CL-alpha Graph at 10m/s")
+plt.title("CL-alpha Graph of Full Plane at 10m/s")
 plt.xlabel("alpha")
 plt.ylabel("CL")
 plt.legend()
