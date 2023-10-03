@@ -16,7 +16,7 @@ Pressure = 85           #kPa
 Va = 10.0                 #m/s
 rho = 0.98985
 q = 0.5*rho*(Va**2)
-print(q)
+print(f'Checkpoint of {q}')
 
 #Wing Calculation                   all in meter
 bw = 0.5                            #span of wing in meter
@@ -36,6 +36,7 @@ Drag = []
 CL = []
 CD = []
 
+#change these values for alpha's min and max values.  
 fileiter = range(0,max+alphaStep,alphaStep)
 fileiterminus = range(min,0,(-1*alphaStep))
 
@@ -43,22 +44,22 @@ fileiterminus = range(min,0,(-1*alphaStep))
 Note: Why 2 for loops ? Tradition in laboratory is 
 saving minus alphas as Ae{val}. Not A-{val}. 
 """
+#seperate folders for different wind speed. Just change when u need to calculate other folder. 
 foldername = "10m_s"
 staticVal = "10"
 
 for x in fileiterminus:
     df = pd.read_csv(f'./{foldername}/Ae{x}-NACA6412NACA0012ER-static{staticVal}-1.csv')
-    #data_10ms_alpha0.info() #info about columns. 
-
-    dataframe = df.iloc[: , [0, 1]].copy()
-    dataframe.abs
-    newDataframe = dataframe.mean(axis=0)
+    #data_10ms_alpha0.info()                     #info about columns. Checkpoints. 
+    dataframe = df.iloc[: , [0, 1]].copy()        # 0 and 1 is the location of L and D values in csv. change it if the file also have other specs. 
+    dataframe2 = dataframe.abs                    #just abs doesnt work. need to write into another dataframe. Bad for memory but for these operation we have lots of. 
+    newDataframe = dataframe2.mean(axis=0)
     #print(a0_10ms_mean_LiftDrag[0])
     #print(a0_10ms_mean_LiftDrag[1])
-    Lift.append(newDataframe[0])
+    Lift.append(newDataframe[0])                   #we record this values if we need Lift Visualization. Just in case. 
     Drag.append(newDataframe[1])
-    CLval = newDataframe[0]/(q*S)
-    CDval = newDataframe[1]/(q*DS)
+    CLval = newDataframe[0]/(q*S)                    # CL = L/qS 
+    CDval = newDataframe[1]/(q*DS)                   #DS is wrong now. need to be calculated by using sinus. will be done.
     CL.append(CLval)
     CD.append(CDval)
 
@@ -67,14 +68,14 @@ for x in fileiter:
     #data_10ms_alpha0.info() #info about columns. 
 
     dataframe = df.iloc[: , [0, 1]].copy()
-    dataframe.abs
-    newDataframe = dataframe.mean(axis=0)
+    dataframe2 = dataframe.abs
+    newDataframe = dataframe2.mean(axis=0)
     #print(a0_10ms_mean_LiftDrag[0])
     #print(a0_10ms_mean_LiftDrag[1])
     Lift.append(newDataframe[0])
     Drag.append(newDataframe[1])
     CLval = newDataframe[0]/(q*S)
-    CDval = newDataframe[1]/(q*DS)
+    CDval = newDataframe[1]/(q*DS)                    #change this !! 
     CL.append(CLval)
     CD.append(CDval)
 
@@ -83,13 +84,13 @@ for x in fileiter:
 
 #end of Saving into CSV.
 
-
+"""
 print(f'Lift : {Lift}')
 print(f'CL : {CL}')
 print("------------------")
 print(f'Drag : {Drag}')
 print(f'CD : {CD}')
-
+"""
 
 #Plotting 
 minAxis = min*-1
